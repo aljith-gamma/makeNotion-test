@@ -27,7 +27,7 @@ function App() {
     formData.append('outputFormat', data.outputFormat);
     formData.append('sheet', file);
 
-    const response = await axios.post('http://localhost:3000/api/v1/products/upload-bulk-products', formData, {
+    const response = await axios.post('http://51.15.233.160:3333/api/v1/products/upload-bulk-products', formData, {
       headers: {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNjAzMDEyLCJleHAiOjE2OTMyMDc4MTJ9.JbuZBB3Uo9paWqmxOhHTEdnnqtX4Vsa0xYLTQ12FZ1k'
       },
