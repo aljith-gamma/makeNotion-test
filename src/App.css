@@ -1,0 +1,41 @@
+body{
+  font-family: sans-serif;
+}
+
+input, select{
+  padding: 10px;
+  width: 100%;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#container form {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background-color: cadetblue;
+  width: 500px;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  border-radius: 15px;
+}
+
+#container form button {
+  padding: 10px 20px;
+  width: 100%;
+  background-color: blue;
+  color: white;
+  border: none;
+  font-size: 16px;
+}
+
+form > div {
+  width: 100%;
+}
