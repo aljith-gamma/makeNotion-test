@@ -27,26 +27,31 @@ function App() {
     formData.append('outputFormat', data.outputFormat);
     formData.append('sheet', file);
 
-    const response = await axios.post('http://51.15.233.160:3333/api/v1/products/upload-bulk-products', formData, {
-      headers: {
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNjAzMDEyLCJleHAiOjE2OTMyMDc4MTJ9.JbuZBB3Uo9paWqmxOhHTEdnnqtX4Vsa0xYLTQ12FZ1k'
-      },
-      responseType: 'arraybuffer'
-    });
+    try {
+        const response = await axios.post("http://51.15.233.160:3333/api/v1/products/upload-bulk-products", formData, {
+          headers: {
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNjAzMDEyLCJleHAiOjE2OTMyMDc4MTJ9.JbuZBB3Uo9paWqmxOhHTEdnnqtX4Vsa0xYLTQ12FZ1k'
+          },
+          responseType: 'arraybuffer'
+        });
 
-    const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-    const blobUrl = URL.createObjectURL(blob);
+        const blobUrl = URL.createObjectURL(blob);
 
-    const a = document.createElement('a');
-    a.href = blobUrl;
-    a.download = data.outputFormat + '.xlsx'; 
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = data.outputFormat + '.xlsx'; 
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
 
-    URL.revokeObjectURL(blobUrl);
-    console.log(response);
+        URL.revokeObjectURL(blobUrl);
+        console.log(response);
+        alert(data.outputFormat + ' Successfully downloaded');
+    } catch (error) {
+        alert('Something went wrong!');
+    }
   }
 
   return (
@@ -74,6 +79,8 @@ function App() {
               <option value="template2">template2</option>
               <option value="template3">template3</option>
               <option value="template4">template4</option>
+              <option value="template5">template5</option>
+              <option value="template6">template6</option>
             </select>
           </div>
 
