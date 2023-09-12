@@ -2,12 +2,22 @@ import { useState } from 'react'
 import './App.css'
 import axios from 'axios';
 
+let templates = [
+  "1_hjärtat",
+  "2_kronan",
+  "3_apotea",
+  "4_lyko",
+  "5_meds",
+  "6_bangerhead"
+]
+
 function App() {
   const [file, setFile] = useState(null);
   const [data, setData] = useState({
     inputFormat: '',
     outputFormat: ''
   })
+  const [load, setLoad] = useState(false);
 
   const handleDataChange = (e) => {
     setData({
@@ -27,8 +37,9 @@ function App() {
     formData.append('outputFormat', data.outputFormat);
     formData.append('sheet', file);
 
+    setLoad(true);
     try {
-        const response = await axios.post("http://51.15.233.160:3333/api/v1/products/upload-bulk-products", formData, {
+        const response = await axios.post("http://51.159.206.19/api/v1/products/upload-bulk-products", formData, {
           headers: {
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNjAzMDEyLCJleHAiOjE2OTMyMDc4MTJ9.JbuZBB3Uo9paWqmxOhHTEdnnqtX4Vsa0xYLTQ12FZ1k'
           },
@@ -41,16 +52,19 @@ function App() {
 
         const a = document.createElement('a');
         a.href = blobUrl;
-        a.download = data.outputFormat + '.xlsx'; 
+        const out = data.outputFormat;
+        a.download = templates[out[(Number(out.length-1))] - 1] + '.xlsx'; 
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
 
         URL.revokeObjectURL(blobUrl);
         console.log(response);
-        alert(data.outputFormat + ' Successfully downloaded');
+        alert(templates[out[(Number(out.length-1))] - 1] + ' Successfully downloaded');
     } catch (error) {
         alert('Something went wrong!');
+    }finally{
+      setLoad(false);
     }
   }
 
@@ -75,18 +89,19 @@ function App() {
             <label>Output format</label>
             <select onChange={ handleDataChange } name="outputFormat" required>
               <option value="">Choose output format...</option>
-              <option value="template1">template1</option>
-              <option value="template2">template2</option>
-              <option value="template3">template3</option>
-              <option value="template4">template4</option>
-              <option value="template5">template5</option>
-              <option value="template6">template6</option>
+              <option value="template1">1_hjärtat</option>
+              <option value="template2">2_kronan</option>
+              <option value="template3">3_apotea</option>
+              <option value="template4">4_lyko</option>
+              <option value="template5">5_meds</option>
+              <option value="template6">6_bangerhead</option>
             </select>
           </div>
 
-          <button>Submit</button>
+          <button disabled={load}>Submit</button>
         </form>
       </div>
+      <h2 style={{ visibility: load ? "visible" : 'hidden' }}>Loading...</h2>
     </div>
   )
 }
