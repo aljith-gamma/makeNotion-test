@@ -53,7 +53,8 @@ function App() {
         const a = document.createElement('a');
         a.href = blobUrl;
         const out = data.outputFormat;
-        a.download = templates[out[(Number(out.length-1))] - 1] + '.xlsx'; 
+        const ext = data.outputFormat === "template6" ? '.xlsm' : '.xlsx'; 
+        a.download = templates[out[(Number(out.length-1))] - 1] + ext;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
